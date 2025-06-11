@@ -55,7 +55,6 @@ Stage/
 ├── static/                # Contient les fichiers Excel et images générés
 └── models/                # (optionnel) Modèles supplémentaires ou archives
 ```
-
 ---
 
 ## 🔗 4. Connectivité & Réseau
@@ -498,6 +497,5 @@ Tu peux maintenant cloner le projet pour recuperer tout les fichiers , lancer le
 
 ```bash
 git clone https://github.com/rachelleichi/esp32-raspberry-esp32cam-veml7700-ASC712-STM32.git
-
 ```
 
