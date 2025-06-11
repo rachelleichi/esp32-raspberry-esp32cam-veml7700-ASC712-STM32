@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>📊 Report Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-light p-4">
+    <div class="container">
+        <div class="mb-5 border p-3 bg-white rounded shadow-sm">
+            <h4 class="mb-3">📊 Graphique global</h4>
+            <canvas id="globalChart" height="200"></canvas>
+        </div>
+
+        <h1 class="mb-4 text-center">📈 Visualisation</h1>
+
+        {% for table_name in ['luminosite', 'presence', 'intensite'] %}
+        <div class="mb-5 border p-3 bg-white rounded shadow-sm">
+            <h4 class="mb-3 text-capitalize">{{ table_name }}</h4>
+            <form method="POST" action="/" class="row g-2 align-items-end">
+                <input type="hidden" name="table" value="{{ table_name }}">
+                <div class="col-md-3">
+                    <label>Date de début :</label>
+                    <input type="date" name="start_date" value="{{ start_date }}" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <label>Date de fin :</label>
+                    <input type="date" name="end_date" value="{{ end_date }}" class="form-control">
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-primary">🔁 Actualiser</button>
+                </div>
+            </form>
+            <form method="POST" action="/download" class="mt-2">
+                <input type="hidden" name="table" value="{{ table_name }}">
+                <input type="hidden" name="start_date" value="{{ start_date }}">
+                <input type="hidden" name="end_date" value="{{ end_date }}">
+                <button class="btn btn-success">⬇️ Télécharger Excel</button>
+            </form>
+
+            <div class="row mt-4">
+                <div class="col-md-6 overflow-auto" style="max-height: 300px;">
+                    {{ dataframes[table_name].html | safe }}
+                </div>
+                <div class="col-md-6">
+                    <canvas id="{{ table_name }}Chart" height="150"></canvas>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+    const mergedData = {{ merged_json | tojson }};
+    const globalLabels = mergedData.map(row => row.timestamp);
+
+    const globalDatasets = [
+        {
+            label: "Taux de luminosité",
+            type: "line",
+            data: mergedData.map(r => r.taux_luminosite),
+            borderColor: 'rgba(255, 206, 86, 1)',
+            backgroundColor: 'rgba(255, 206, 86, 0.2)',
+            fill: false,
+            tension: 0.3,
+            yAxisID: 'y'
+        },
+        {
+            label: "Puissance",
+            type: "line",
+            data: mergedData.map(r => r.puissance),
+            borderColor: 'rgba(255, 99, 132, 1)',
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            fill: false,
+            tension: 0.3,
+            yAxisID: 'y'
+        },
+        {
+            label: "Courant",
+            type: "line",
+            data: mergedData.map(r => r.courant),
+            borderColor: 'rgba(54, 162, 235, 1)',
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            fill: false,
+            tension: 0.3,
+            yAxisID: 'y'
+        },
+        {
+            label: "Présence",
+            type: "bar",
+            data: mergedData.map(r => r.presence_detected),
+            backgroundColor: 'rgba(75, 192, 192, 0.6)',
+            yAxisID: 'yPresence'
+        }
+    ];
+
+    new Chart(document.getElementById("globalChart").getContext('2d'), {
+        type: "bar", // Ce type sera ignoré car chaque dataset définit son type
+        data: {
+            labels: globalLabels,
+            datasets: globalDatasets
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: true }
+            },
+            scales: {
+                y: {
+                    type: 'linear',
+                    position: 'left',
+                    beginAtZero: true,
+                    title: { display: true, text: 'Valeurs continues' }
+                },
+                yPresence: {
+                    type: 'linear',
+                    position: 'right',
+                    beginAtZero: true,
+                    grid: { drawOnChartArea: false },
+                    title: { display: true, text: 'Présence (0/1)' }
+                }
+            }
+        }
+    });
+
+
+</script>
+
+<script>
+    const dataframes = {{ dataframes | tojson }};
+
+   const chartColors = {
+        luminosite: {
+            datasets: [
+                {
+                    label: "Taux de luminosité",
+                    field: "taux_luminosite",
+                    borderColor: 'rgba(255, 206, 86, 1)',
+                    backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                    type: 'line'
+                }
+            ]
+        },
+        intensite: {
+            datasets: [
+                {
+                    label: "Puissance",
+                    field: "puissance",
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    type: 'line'
+                },
+                {
+                    label: "Intensité (Courant)",
+                    field: "courant",
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    type: 'line'
+                }
+            ]
+        },
+        presence: {
+            datasets: [
+                {
+                    label: "Présence détectée",
+                    field: "presence_detected",
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.4)',
+                    type: 'bar'
+                }
+            ]
+        }
+    };
+
+
+   Object.keys(chartColors).forEach(table => {
+    const data = dataframes[table].json;
+    const config = chartColors[table];
+    const ctx = document.getElementById(`${table}Chart`);
+    if (!ctx || data.length === 0) return;
+
+    const datasets = config.datasets.map(ds => ({
+        label: ds.label,
+        data: data.map(r => r[ds.field]),
+        borderColor: ds.borderColor,
+        backgroundColor: ds.backgroundColor,
+        fill: false,
+        tension: 0.3,
+        type: ds.type
+    }));
+
+    new Chart(ctx.getContext('2d'), {
+        data: {
+            labels: data.map(r => r.timestamp),
+            datasets: datasets
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: true }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+});
+
+</script>
+
+</body>
+</html>
