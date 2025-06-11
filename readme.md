@@ -497,7 +497,7 @@ Tu peux maintenant cloner ton projet, lancer le script `init.sh`, créer un hots
 Exemple :
 
 ```bash
-git clone <ton dépôt Git>
+git clone git clone https://github.com/rachelleichi/esp32-raspberry-esp32cam-veml7700-ASC712-STM32.git
 cd ~/Stage
 chmod +x ~/init.sh
 ./init.sh
