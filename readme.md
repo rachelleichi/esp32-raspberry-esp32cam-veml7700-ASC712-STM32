@@ -65,6 +65,11 @@ Afin que le PC, l’ESP32 et l’ESP32-CAM puissent communiquer avec le Raspberr
 
 #### 📡 Création manuelle du hotspot :
 
+1. Installer `nmcli` si ce n’est pas déjà fait :
+   ```bash
+   sudo apt-get install network-manager
+   ```
+
 ```bash
 nmcli dev wifi hotspot ifname wlan0 ssid MonHotspot password monmotdepasse
 ```
@@ -491,12 +496,103 @@ sudo apt update && sudo apt upgrade -y
 
 ### 🛠️ Étape 5 : Installer les outils nécessaires
 
-Tu peux maintenant cloner le projet pour recuperer tout les fichiers , lancer le script `init.sh`, créer un hotspot, etc... en suivants les étapes 11 ..
+Tu peux maintenant cloner le projet pour récupérer tous les fichiers, lancer le script `init.sh`, créer un hotspot, etc. Cette opération nécessite une connexion Internet.
 
+#### 🔗 Option 1 : Cloner depuis GitHub (nécessite Internet)
 
+Connecte  le Raspberry Pi à ton **hotspot personnel** (smartphone) en Wi-Fi :
+
+1. Active le **partage de connexion** sur ton téléphone.
+
+2. Sur le Raspberry Pi ( avec accès Internet), connecte-toi au Wi-Fi :
+
+   ```bash
+   nmcli dev wifi connect "NomDuHotspot" password "MotDePasseDuHotspot"
+   ```
+
+3. Vérifie que tu es bien connecté :
+
+   ```bash
+   ping google.com
+   ```
+
+4. Clone le dépôt :
+
+   ```bash
+   git clone https://github.com/rachelleichi/esp32-raspberry-esp32cam-veml7700-ASC712-STM32.git
+   et puis rentrer dans le repertoire 
+   cd esp32-raspberry-esp32cam-veml7700-ASC712-STM32
+   ```
+
+---
+
+#### 📡 Option 2 : Transférer les fichiers via `scp` (si pas d'accès Internet)
+
+Si tu n’as pas d’accès Internet sur ton Raspberry Pi, tu peux transférer les fichiers depuis un autre ordinateur qui a déja les fichiers clonés , qui est(connecté au réseau local ou au hotspot du Pi) avec la commande `scp`.
+
+1. Sur ton PC (Linux/macOS ou Git Bash sur Windows), exécute :
+
+   ```bash
+   scp -r /chemin/vers/ton/projet pi@<IP_DU_PI>:/home/pi/
+   ```
+
+   Remplace :
+
+   * `/chemin/vers/ton/projet` : par le chemin local vers ton projet (sur ton PC),
+   * `pi@<IP_DU_PI>` : par l’utilisateur et l’adresse IP du Raspberry Pi (exemple : `pi@192.168.4.1`).
+
+2. Exemple complet :
+
+   ```bash
+   scp -r esp32-raspberry-esp32cam-veml7700-ASC712-STM32 pi@192.168.4.1:/home/pi/
+   ```
+
+3. Tu peux ensuite te connecter au Pi avec :
+
+   ```bash
+   ssh user@ip_rasp
+   cd esp32-raspberry-esp32cam-veml7700-ASC712-STM32
+   puis suivre les etapes dans 11 ....
+   ```
+
+⚠️ Le Raspberry Pi doit avoir le serveur SSH activé pour que `scp` fonctionne. Pour l’activer :
 
 ```bash
-git clone https://github.com/rachelleichi/esp32-raspberry-esp32cam-veml7700-ASC712-STM32.git
+sudo systemctl enable ssh
+sudo systemctl start ssh
 ```
 
+---
+
 * La partie STM32 et STM32_BLE.py n'a pas été abordé dans le readme , car pas necessaire pour le stage
+
+
+---
+
+### 🧰 Quelques commandes utiles (Linux / Raspberry Pi)
+
+| Action                                      | Commande terminal                                     |
+| ------------------------------------------- | ----------------------------------------------------  |
+| ✏️ Créer ou modifier un fichier texte       | `sudo nano nom_du_fichier.extension`                 |
+| 📂 Entrer dans un répertoire                | `cd nom_du_répertoire`                               |
+| ⬆️ Revenir au dossier parent                | `cd ..`                                              |
+| 🗑️ Supprimer un fichier                    | `rm nom_du_fichier.extension`                         |
+| 🗂️ Lister les fichiers et dossiers         | `ls` ou `ls -l` (liste détaillée)                     |
+| 📁 Créer un dossier                         | `mkdir nom_du_dossier`                               |
+| 🗑️ Supprimer un dossier et son contenu     | `rm -r nom_du_dossier`                                |
+| 📋 Copier un fichier                        | `cp source.extension destination.extension`          |
+| 🔄 Déplacer/renommer un fichier             | `mv ancien_nom nouveau_nom`                          |
+| 🔒 Donner les droits d’exécution            | `chmod +x script.sh`                                 |
+| ▶️ Exécuter un script bash                  | `./script.sh`                                        |
+| 🐍 Exécuter un fichier Python               | `python script.py`                                   |
+| 🔌 Éteindre le Raspberry Pi                 | `sudo shutdown `                                     |
+| 🔄 Redémarrer le Raspberry Pi               | `sudo reboot`                                        |
+| 📡 Scanner les réseaux Wi-Fi                | `nmcli dev wifi`                                     |
+| 📶 Se connecter à un Wi-Fi                  | `nmcli dev wifi connect "Nom" password "MotDePasse"` |
+| 🧠 Connaître l’adresse IP locale            | `hostname -I` ou `ip a`                              |
+| 🔐 Se connecter en SSH (sur le même réseau) | `ssh pi@adresse_ip` (par ex. `ssh pi@192.168.1.42`)  |
+
+💡 *Remarque : l’utilisateur par défaut sur Raspberry Pi est souvent `pi`, et le mot de passe par défaut est `raspberry` (à changer !).*
+* l'extension de fichiers python est .py et fichiers bash(systeme) est .sh
+
+
