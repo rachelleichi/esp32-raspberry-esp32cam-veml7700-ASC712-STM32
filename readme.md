@@ -489,6 +489,109 @@ ssh pi@<adresse-ip>
 ```
 en etant sur le meme réseau
 ---
+Parfait, je comprends ! Tu veux expliquer la méthode où on modifie la commande de démarrage (`cmdline.txt`) pour démarrer en mode **single-user** (mode maintenance) et changer le mot de passe.
+
+Voici comment intégrer ça dans le point 5 de ta section, en français puis en anglais :
+
+---
+
+### ⚠️ En cas de perte du mot de passe
+
+Si tu as oublié le mot de passe de l’utilisateur `pi`, voici une méthode rapide pour le réinitialiser :
+
+1. Éteins ton Raspberry Pi et retire la carte microSD.
+2. Insère la carte microSD dans un autre ordinateur.
+3. Ouvre la partition `boot` (accessible sur la plupart des systèmes).
+4. Crée un fichier vide nommé `ssh` (sans extension) dans la partition `boot` pour réactiver SSH si besoin.
+5. Pour réinitialiser le mot de passe sans réinstaller le système, tu peux modifier le fichier `cmdline.txt` dans la partition `boot` :
+
+   * Ouvre `cmdline.txt` avec un éditeur de texte.
+
+   * À la fin de la ligne unique (tout est sur une seule ligne), ajoute :
+
+     ```
+     init=/bin/sh
+     ```
+
+   * Sauvegarde et réinsère la carte microSD dans le Raspberry Pi, puis démarre-le.
+
+   * Le Pi démarrera en mode **shell root sans mot de passe**.
+
+   * Tape ensuite la commande pour monter la partition racine en lecture-écriture :
+
+     ```bash
+     mount -o remount,rw /
+     ```
+
+   * Change le mot de passe de l’utilisateur `pi` oou autre avec :
+
+     ```bash
+     passwd pi
+     ```
+
+   * Tape un nouveau mot de passe quand demandé.
+
+   * Ensuite, pour redémarrer proprement :
+
+     ```bash
+     exec /sbin/init
+     ```
+
+   * Une fois redémarré, retire la modification dans `cmdline.txt` (supprime `init=/bin/sh`) pour revenir au démarrage normal
+   avec : sudo nano /boot/cmdline.txt  .
+   Sauvegarde et quitte nano :
+      Pour sauvegarder : Ctrl + O puis Entrée
+
+      Pour quitter : Ctrl + X
+
+---
+
+### ⚠️ In case you forget the password
+
+If you forget the password for user `pi`, here is a quick way to reset it:
+
+1. Power off your Raspberry Pi and remove the microSD card.
+2. Insert the microSD card into another computer.
+3. Open the `boot` partition (accessible on most systems).
+4. Create an empty file named `ssh` (without extension) in the `boot` partition to enable SSH if needed.
+5. To reset the password without reinstalling the system, you can modify the `cmdline.txt` file in the `boot` partition:
+
+   * Open `cmdline.txt` with a text editor.
+
+   * At the end of the single line (it’s all one line), add:
+
+     ```
+     init=/bin/sh
+     ```
+
+   * Save and put the microSD card back into the Raspberry Pi, then boot it up.
+
+   * The Pi will boot into a **root shell without password**.
+
+   * Then remount the root filesystem in read-write mode:
+
+     ```bash
+     mount -o remount,rw /
+     ```
+
+   * Change the `pi` user password with:
+
+     ```bash
+     passwd pi
+     ```
+
+   * Enter a new password when prompted.
+
+   * Then, to reboot properly:
+
+     ```bash
+     exec /sbin/init
+     ```
+
+   * After reboot, remove the `init=/bin/sh` addition from `cmdline.txt` to restore normal boot.
+
+---
+
 
 ### ⚙️ Étape 4 : Mettre à jour le système
 
