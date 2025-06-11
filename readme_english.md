@@ -422,50 +422,54 @@ Then add:
 
 ---
 
-## 🧰 14. Raspberry Pi Setup (Desktop OS + Initial Configuration)
+## 🧰 14. Getting Started with a Raspberry Pi (Desktop OS + Initial Setup)
 
 ### 📦 Step 1: Download Raspberry Pi Imager
 
-1. Go to:
+1. Go to the official website:
    👉 [https://www.raspberrypi.com/software](https://www.raspberrypi.com/software)
-2. Download and install **Raspberry Pi Imager** (Windows, macOS, or Ubuntu)
+
+2. Download and install **Raspberry Pi Imager** (available for Windows, macOS, Ubuntu)
 
 ---
 
 ### 🖥️ Step 2: Prepare the microSD Card
 
-1. Insert a **16 GB (or larger) microSD card** into your computer
+1. Insert a **microSD card (16 GB or larger)** into your computer
 2. Launch **Raspberry Pi Imager**
-3. Select:
+3. Choose:
 
    * **OS**: `Raspberry Pi OS with desktop (32-bit)`
    * **Storage**: your microSD card
-4. Click the ⚙️ icon (bottom right) to preconfigure:
+4. Click on the ⚙️ (gear icon, bottom right) to **preconfigure**:
 
    * Hostname (e.g., `raspberrypi`)
    * Username (e.g., `pi`)
    * Password
    * Enable SSH
-   * Wi-Fi SSID & password (if you want to preconnect)
-   * Timezone and keyboard layout
+   * Configure Wi-Fi (SSID + password) – or skip if you want to create a hotspot later
+   * Select timezone
 5. Click **Write** and wait
 
 ---
 
 ### 🔌 Step 3: Boot the Raspberry Pi
 
-1. Insert the microSD card into the Pi
-2. Connect an HDMI monitor, keyboard, and mouse (optional after first boot)
-3. Power on the Pi
-4. Optionally, SSH in if network and SSH are configured:
+1. Insert the microSD card into the Raspberry Pi
+2. Connect a monitor, keyboard/mouse, and power cable
+3. The Raspberry Pi will boot automatically
 
-   ```bash
-   ssh pi@<raspberry-pi-ip>
-   ```
+> If you enabled SSH and Wi-Fi, you can also connect remotely without a screen using:
 
----
+```bash
+ssh pi@<ip-address>
+```
 
-### ⚙️ Step 4: Update the System
+## (make sure you are on the same network)
+
+### ⚙️ Step 4: Update the system
+
+Open a terminal and run:
 
 ```bash
 sudo apt update && sudo apt upgrade -y
@@ -473,13 +477,110 @@ sudo apt update && sudo apt upgrade -y
 
 ---
 
-### 🛠️ Step 5: Install Required Tools
+### 🛠️ Step 5: Install the required tools
 
-Now you can clone the project, run `init.sh`, create the hotspot, etc., following section 11:
+You can now clone the project to get all the files, run the `init.sh` script, create a hotspot, etc. This requires an internet connection.
+
+#### 🔗 Option 1: Clone from GitHub (requires Internet)
+
+Connect your Raspberry Pi to your **personal hotspot** (smartphone) via Wi-Fi:
+
+1. Enable **Internet Sharing** (hotspot) on your phone.
+
+2. On the Raspberry Pi (with Internet access), connect to Wi-Fi:
+
+```bash
+nmcli dev wifi connect "HotspotName" password "HotspotPassword"
+```
+
+3. Check you are connected:
+
+```bash
+ping google.com
+```
+
+4. Clone the repo:
 
 ```bash
 git clone https://github.com/rachelleichi/esp32-raspberry-esp32cam-veml7700-ASC712-STM32.git
+cd esp32-raspberry-esp32cam-veml7700-ASC712-STM32
 ```
 
-*Note: The STM32 and `STM32_BLE.py` parts are not covered in this README, as they were not needed for the internship.*
+To disconnect:
 
+```bash
+nmcli connection down HotspotName
+```
+
+---
+
+#### 📡 Option 2: Transfer files via `scp` (if no Internet access)
+
+If your Raspberry Pi has no Internet, you can transfer files from another computer that already has the cloned files and is on the same local network or Pi’s hotspot using `scp`.
+
+1. On your PC (Linux/macOS or Git Bash on Windows), run:
+
+```bash
+scp -r /path/to/your/project pi@<PI_IP_ADDRESS>:/home/pi/
+```
+
+Replace:
+
+* `/path/to/your/project` with the local path on your PC,
+* `pi@<PI_IP_ADDRESS>` with your Pi’s username and IP address (e.g., `pi@192.168.4.1`).
+
+2. Example:
+
+```bash
+scp -r esp32-raspberry-esp32cam-veml7700-ASC712-STM32 pi@192.168.4.1:/home/pi/
+```
+
+3. Then connect to the Pi and navigate to the project folder:
+
+```bash
+ssh pi@<PI_IP_ADDRESS>
+cd esp32-raspberry-esp32cam-veml7700-ASC712-STM32
+```
+
+Then follow the steps from step 11 onward...
+
+⚠️ SSH server must be enabled on the Raspberry Pi for `scp` to work. To enable it:
+
+```bash
+sudo systemctl enable ssh
+sudo systemctl start ssh
+```
+
+---
+
+* The STM32 and STM32\_BLE.py parts are not covered in this README as they are not needed for the internship.
+
+---
+
+### 🧰 Useful commands (Linux / Raspberry Pi)
+
+| Action                                  | Terminal command                                 |
+| --------------------------------------- | ------------------------------------------------ |
+| ✏️ Create or edit a text file           | `sudo nano filename.extension`                   |
+| 📂 Enter a directory                    | `cd directory_name`                              |
+| ⬆️ Go up to the parent directory        | `cd ..`                                          |
+| 🗑️ Delete a file                       | `rm filename.extension`                          |
+| 🗂️ List files and folders              | `ls` or `ls -l` (detailed list)                  |
+| 📁 Create a directory                   | `mkdir directory_name`                           |
+| 🗑️ Delete a directory and its contents | `rm -r directory_name`                           |
+| 📋 Copy a file                          | `cp source.extension destination.extension`      |
+| 🔄 Move or rename a file                | `mv old_name new_name`                           |
+| 🔒 Give execute permissions             | `chmod +x script.sh`                             |
+| ▶️ Run a bash script                    | `./script.sh`                                    |
+| 🐍 Run a Python file                    | `python script.py`                               |
+| 🔌 Shut down the Raspberry Pi           | `sudo shutdown`                                  |
+| 🔄 Reboot the Raspberry Pi              | `sudo reboot`                                    |
+| 📡 Scan Wi-Fi networks                  | `nmcli dev wifi`                                 |
+| 📶 Connect to Wi-Fi                     | `nmcli dev wifi connect "Name" password "Pass"`  |
+| 🧠 Check local IP address               | `hostname -I` or `ip a`                          |
+| 🔐 Connect via SSH (on same network)    | `ssh pi@ip_address` (e.g. `ssh pi@192.168.1.42`) |
+
+💡 *Note: The default Raspberry Pi username is often `pi` and the default password is `raspberry` (change it!).*
+*Python files use the `.py` extension and bash/system files use `.sh`.*
+
+---
