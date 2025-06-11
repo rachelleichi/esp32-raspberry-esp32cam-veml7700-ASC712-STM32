@@ -5,6 +5,8 @@
 
 This project was carried out as part of my 2nd year internship. It involves deploying a complete environmental monitoring and human presence detection solution using a Raspberry Pi and ESP32 microcontrollers.
 
+
+* The STM32 and STM32\_BLE.py parts are not covered in this README as they are not needed for the internship.
 ---
 
 ## 🍓 2. General Architecture
@@ -603,7 +605,6 @@ sudo systemctl start ssh
 
 ---
 
-* The STM32 and STM32\_BLE.py parts are not covered in this README as they are not needed for the internship.
 
 ---
 

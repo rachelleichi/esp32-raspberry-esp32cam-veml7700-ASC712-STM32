@@ -7,6 +7,9 @@ Ce projet a été réalisé dans le cadre de mon stage de fin de 2eme année. Il
 
 ---
 
+* La partie STM32 et STM32_BLE.py n'a pas été abordé dans le readme , car pas necessaire pour le stage
+---
+
 ## 🍓 2. Architecture générale
 
 Le Raspberry Pi agit comme **serveur central** qui :
@@ -501,7 +504,6 @@ sudo apt update && sudo apt upgrade -y
 
 Tu peux maintenant cloner le projet pour récupérer tous les fichiers, lancer le script `init.sh`, créer un hotspot, etc. Cette opération nécessite une connexion Internet.
 
-Bien sûr ! Voici ton texte avec l’**option `wget` ajoutée en premier**, et les options décalées proprement :
 
 ---
 
@@ -623,9 +625,7 @@ sudo systemctl enable ssh
 sudo systemctl start ssh
 ```
 
----
 
-* La partie STM32 et STM32_BLE.py n'a pas été abordé dans le readme , car pas necessaire pour le stage
 
 
 ---
