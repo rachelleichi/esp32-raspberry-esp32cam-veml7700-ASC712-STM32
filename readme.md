@@ -81,6 +81,9 @@ explications :
 Une fois le hotspot activé, **connectez-y le PC, l’ESP32 et l’ESP32-CAM**.
 L'adresse IP locale du Raspberry Pi est généralement `192.168.**.1`. (partie 5)
 
+
+( Commande utile pour arreter le hotspot (deconseillé ) : nmcli connection down  MonHotspot )
+
 #### 🔁 Activer le hotspot automatiquement au démarrage
 
 Pour activer le hotspot à chaque démarrage :
@@ -523,7 +526,7 @@ Connecte  le Raspberry Pi à ton **hotspot personnel** (smartphone) en Wi-Fi :
    et puis rentrer dans le repertoire 
    cd esp32-raspberry-esp32cam-veml7700-ASC712-STM32
    ```
-
+Se deconnecter : nmcli connection down NomDuHotspot
 ---
 
 #### 📡 Option 2 : Transférer les fichiers via `scp` (si pas d'accès Internet)
