@@ -3,7 +3,7 @@
 
 ## 🖥️ 1. Introduction
 
-Ce projet a été réalisé dans le cadre de mon stage de fin d'année. Il consiste à déployer une solution complète de surveillance environnementale et de détection de présence humaine à l’aide d’un Raspberry Pi et de microcontrôleurs ESP32.
+Ce projet a été réalisé dans le cadre de mon stage de fin de 2eme année. Il consiste à déployer une solution complète de surveillance environnementale et de détection de présence humaine à l’aide d’un Raspberry Pi et de microcontrôleurs ESP32.
 
 ---
 
