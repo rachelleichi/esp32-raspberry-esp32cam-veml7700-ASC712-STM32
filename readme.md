@@ -523,7 +523,7 @@ Si tu as oublié le mot de passe de l’utilisateur `pi`, voici une méthode rap
      mount -o remount,rw /
      ```
 
-   * Change le mot de passe de l’utilisateur `pi` oou autre avec :
+   * Change le mot de passe de l’utilisateur `pi` ou autre utilisateur avec :
 
      ```bash
      passwd pi
@@ -543,52 +543,6 @@ Si tu as oublié le mot de passe de l’utilisateur `pi`, voici une méthode rap
       Pour sauvegarder : Ctrl + O puis Entrée
 
       Pour quitter : Ctrl + X
-
----
-
-### ⚠️ In case you forget the password
-
-If you forget the password for user `pi`, here is a quick way to reset it:
-
-1. Power off your Raspberry Pi and remove the microSD card.
-2. Insert the microSD card into another computer.
-3. Open the `boot` partition (accessible on most systems).
-4. Create an empty file named `ssh` (without extension) in the `boot` partition to enable SSH if needed.
-5. To reset the password without reinstalling the system, you can modify the `cmdline.txt` file in the `boot` partition:
-
-   * Open `cmdline.txt` with a text editor.
-
-   * At the end of the single line (it’s all one line), add:
-
-     ```
-     init=/bin/sh
-     ```
-
-   * Save and put the microSD card back into the Raspberry Pi, then boot it up.
-
-   * The Pi will boot into a **root shell without password**.
-
-   * Then remount the root filesystem in read-write mode:
-
-     ```bash
-     mount -o remount,rw /
-     ```
-
-   * Change the `pi` user password with:
-
-     ```bash
-     passwd pi
-     ```
-
-   * Enter a new password when prompted.
-
-   * Then, to reboot properly:
-
-     ```bash
-     exec /sbin/init
-     ```
-
-   * After reboot, remove the `init=/bin/sh` addition from `cmdline.txt` to restore normal boot.
 
 ---
 
