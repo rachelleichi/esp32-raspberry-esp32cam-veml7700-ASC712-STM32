@@ -502,10 +502,11 @@ sudo apt update && sudo apt upgrade -y
 
 ### 🛠️ Étape 5 : Installer les outils nécessaires
 
-Tu peux maintenant cloner le projet pour récupérer tous les fichiers, lancer le script `init.sh`, créer un hotspot, etc. Cette opération nécessite une connexion Internet.
+Tu peux maintenant cloner le projet pour récupérer tous les fichiers, lancer le script `init.sh`, créer un hotspot, etc. Cette opération nécessite une connexion Internet (pour cloner de git , le reste non ).
 
 
 ---
+Options de recupération de ces fichiers si abscence de carte USB :
 
 #### 🕸️ Option 0 : Télécharger le dépôt via `wget` (sans installer Git, nécessite Internet)
 
