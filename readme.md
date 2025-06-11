@@ -540,7 +540,7 @@ Si tu as oublié le mot de passe de l’utilisateur `pi`, voici une méthode rap
    * Une fois redémarré, retire la modification dans `cmdline.txt` (supprime `init=/bin/sh`) pour revenir au démarrage normal
    avec : sudo nano /boot/cmdline.txt  .
    Sauvegarde et quitte nano :
-      Pour sauvegarder : Ctrl + O puis Entrée
+      Pour sauvegarder : Ctrl + S puis  Ctrl + X
 
       Pour quitter : Ctrl + X
 
