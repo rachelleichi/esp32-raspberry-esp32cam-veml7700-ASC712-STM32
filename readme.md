@@ -85,15 +85,16 @@ Une fois le hotspot activé, **connectez-y le PC, l’ESP32 et l’ESP32-CAM**.
 L'adresse IP locale du Raspberry Pi est généralement `192.168.**.1`. (partie 5)
 
 
-( Commande utile pour arreter le hotspot (deconseillé ) : nmcli connection down  MonHotspot )
+( Commande utile pour arreter le hotspot (deconseillé ) : nmcli connection down Hotspot  "ne pas changer le mot Hotspot )
 
 #### 🔁 Activer le hotspot automatiquement au démarrage
 
 Pour activer le hotspot à chaque démarrage :
 
 ```bash
-nmcli connection modify Hotspot connection.autoconnect yes
+nmcli connection modify Hotspot connection.autoconnect yes   
 ```
+ne pas changer Hotspot dans cette commande
 
 ---
 
@@ -470,7 +471,6 @@ Voici la section à ajouter à la fin de ton README pour expliquer comment confi
    * Nom d’utilisateur (ex. `pi`)
    * Mot de passe
    * Activer SSH
-   * Configurer le Wi-Fi (SSID + mot de passe) – ou ignorer si tu veux créer un hotspot après
    * Choisir le fuseau horaire
 5. Clique sur **Écrire** et patiente
 
