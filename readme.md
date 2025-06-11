@@ -499,3 +499,4 @@ Tu peux maintenant cloner le projet pour recuperer tout les fichiers , lancer le
 git clone https://github.com/rachelleichi/esp32-raspberry-esp32cam-veml7700-ASC712-STM32.git
 ```
 
+* La partie STM32 et STM32_BLE.py n'a pas été abordé dans le readme , car pas necessaire pour le stage
