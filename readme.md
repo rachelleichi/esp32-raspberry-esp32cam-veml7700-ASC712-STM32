@@ -55,7 +55,6 @@ Stage/
 ├── static/                # Contient les fichiers Excel et images générés
 └── models/                # (optionnel) Modèles supplémentaires ou archives
 ```
-
 ---
 
 ## 🔗 4. Connectivité & Réseau
