@@ -492,14 +492,12 @@ sudo apt update && sudo apt upgrade -y
 
 ### 🛠️ Étape 5 : Installer les outils nécessaires
 
-Tu peux maintenant cloner ton projet, lancer le script `init.sh`, créer un hotspot, etc.
+Tu peux maintenant cloner le projet pour recuperer tout les fichiers , lancer le script `init.sh`, créer un hotspot, etc... en suivants les étapes 11 ..
 
-Exemple :
+
 
 ```bash
-git clone <ton dépôt Git>
-cd ~/Stage
-chmod +x ~/init.sh
-./init.sh
+git clone https://github.com/rachelleichi/esp32-raspberry-esp32cam-veml7700-ASC712-STM32.git
+
 ```
 
