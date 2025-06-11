@@ -501,13 +501,17 @@ sudo apt update && sudo apt upgrade -y
 
 Tu peux maintenant cloner le projet pour récupérer tous les fichiers, lancer le script `init.sh`, créer un hotspot, etc. Cette opération nécessite une connexion Internet.
 
-#### 🔗 Option 1 : Cloner depuis GitHub (nécessite Internet)
+Bien sûr ! Voici ton texte avec l’**option `wget` ajoutée en premier**, et les options décalées proprement :
 
-Connecte  le Raspberry Pi à ton **hotspot personnel** (smartphone) en Wi-Fi :
+---
+
+#### 🕸️ Option 0 : Télécharger le dépôt via `wget` (sans installer Git, nécessite Internet)
+
+Connecte le Raspberry Pi à ton **hotspot personnel** (smartphone) en Wi-Fi :
 
 1. Active le **partage de connexion** sur ton téléphone.
 
-2. Sur le Raspberry Pi ( avec accès Internet), connecte-toi au Wi-Fi :
+2. Sur le Raspberry Pi (avec accès Internet), connecte-toi au Wi-Fi :
 
    ```bash
    nmcli dev wifi connect "NomDuHotspot" password "MotDePasseDuHotspot"
@@ -519,19 +523,70 @@ Connecte  le Raspberry Pi à ton **hotspot personnel** (smartphone) en Wi-Fi :
    ping google.com
    ```
 
-4. Clone le dépôt :
+4. Télécharge l’archive ZIP du dépôt avec `wget` :
+
+   ```bash
+   wget https://github.com/rachelleichi/esp32-raspberry-esp32cam-veml7700-ASC712-STM32/archive/refs/heads/main.zip -O esp32-main.zip
+   ```
+
+5. Décompresse l’archive :
+
+   ```bash
+   unzip esp32-main.zip
+   cd esp32-raspberry-esp32cam-veml7700-ASC712-STM32-main  (pour rentrer dans le dossier)
+   ```
+
+6. Se déconnecter :
+
+   ```bash
+   nmcli connection down NomDuHotspot
+   ```
+
+---
+
+#### 🔗 Option 1 : Cloner depuis GitHub (nécessite Internet)
+
+Connecte le Raspberry Pi à ton **hotspot personnel** (smartphone) en Wi-Fi :
+
+1. Active le **partage de connexion** sur ton téléphone.
+
+2. Sur le Raspberry Pi (avec accès Internet), connecte-toi au Wi-Fi :
+
+   ```bash
+   nmcli dev wifi connect "NomDuHotspot" password "MotDePasseDuHotspot"
+   ```
+
+3. Vérifie que tu es bien connecté :
+
+   ```bash
+   ping google.com
+   ```
+
+4. Installe git :
+
+   ```bash
+   sudo apt update
+   sudo apt install git
+   ```
+
+5. Clone le dépôt :
 
    ```bash
    git clone https://github.com/rachelleichi/esp32-raspberry-esp32cam-veml7700-ASC712-STM32.git
-   et puis rentrer dans le repertoire 
    cd esp32-raspberry-esp32cam-veml7700-ASC712-STM32
    ```
-Se deconnecter : nmcli connection down NomDuHotspot
+
+6. Se déconnecter :
+
+   ```bash
+   nmcli connection down NomDuHotspot
+   ```
+
 ---
 
 #### 📡 Option 2 : Transférer les fichiers via `scp` (si pas d'accès Internet)
 
-Si tu n’as pas d’accès Internet sur ton Raspberry Pi, tu peux transférer les fichiers depuis un autre ordinateur qui a déja les fichiers clonés , qui est(connecté au réseau local ou au hotspot du Pi) avec la commande `scp`.
+Si tu n’as pas d’accès Internet sur ton Raspberry Pi, tu peux transférer les fichiers depuis un autre ordinateur qui a déjà cloné le dépôt Git (voir option 1), connecté au même réseau local ou hotspot du Pi.
 
 1. Sur ton PC (Linux/macOS ou Git Bash sur Windows), exécute :
 
@@ -541,8 +596,8 @@ Si tu n’as pas d’accès Internet sur ton Raspberry Pi, tu peux transférer l
 
    Remplace :
 
-   * `/chemin/vers/ton/projet` : par le chemin local vers ton projet (sur ton PC),
-   * `pi@<IP_DU_PI>` : par l’utilisateur et l’adresse IP du Raspberry Pi (exemple : `pi@192.168.4.1`).
+   * `/chemin/vers/ton/projet` : chemin local vers ton projet (sur ton PC),
+   * `pi@<IP_DU_PI>` : utilisateur et adresse IP du Raspberry Pi (exemple : `pi@192.168.4.1`).
 
 2. Exemple complet :
 
@@ -550,15 +605,18 @@ Si tu n’as pas d’accès Internet sur ton Raspberry Pi, tu peux transférer l
    scp -r esp32-raspberry-esp32cam-veml7700-ASC712-STM32 pi@192.168.4.1:/home/pi/
    ```
 
-3. Tu peux ensuite te connecter au Pi avec :
+3. Connecte-toi ensuite au Pi avec :
 
    ```bash
-   ssh user@ip_rasp
+   ssh pi@192.168.4.1
    cd esp32-raspberry-esp32cam-veml7700-ASC712-STM32
-   puis suivre les etapes dans 11 ....
    ```
 
-⚠️ Le Raspberry Pi doit avoir le serveur SSH activé pour que `scp` fonctionne. Pour l’activer :
+4. Puis continue avec les étapes nécessaires.
+
+---
+
+⚠️ **Note** : Le Raspberry Pi doit avoir le serveur SSH activé pour que `scp` fonctionne. Pour l’activer :
 
 ```bash
 sudo systemctl enable ssh
