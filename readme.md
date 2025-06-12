@@ -125,12 +125,14 @@ ne pas changer Hotspot dans cette commande
 2. Dans **URL de gestionnaire de cartes supplémentaires**, ajouter :
 
 ```
-https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+https://dl.espressif.com/dl/package_esp32_index.json
 ```
 
-3. Aller dans **Outils > Type de carte > Gestionnaire de cartes**
+3. Aller dans ** Outils > Gestionnaire de cartes > Type de carte **
 4. Rechercher "**ESP32**" et installer **esp32 by Espressif Systems**
+5. Aller dans ** Outils > Board ** et choisir ESP32 Dev Module
 
+Lien utile : https://www.hackster.io/NYH-workshop/wemos-r32-with-arduino-startup-guide-7bc841?f=1
 ---
 
 ### ⚡ Étape 3 : Connexion du matériel
@@ -140,7 +142,6 @@ https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32
 
   * **Carte** : `ESP32 Dev Module`
   * **Port** : sélection automatique après branchement
-  * **Vitesse** : 115200
 
 ---
 
@@ -177,10 +178,9 @@ Ouvrir le fichier et modifier les lignes 22,23,24 :
 ```cpp
 const char* ssid = "MonHotspot";         // nom du hotspot du Raspberry Pi
 const char* password = "monmotdepasse";  // mot de passe
-const char* serverName = "http://192.168.43.1:5010/data";  // IP + endpoint Flask
+const char* serverName = "http://192.168.43.1:5010/data";  // IP + endpoint Flask (ne pas changer /data)
 ```
-
-Assurez-vous que l’adresse IP du Pi est correcte (souvent `192.168.43.1` en hotspot).
+Assurez-vous que l’adresse IP du Pi est correcte .
 
 ---
 
@@ -197,17 +197,26 @@ Assurez-vous que l’adresse IP du Pi est correcte (souvent `192.168.43.1` en ho
 ### 🧰 Matériel nécessaire
 
 * 1 carte **ESP32-CAM**
-* 1 câble **micro-USB** (avec adaptateur intégré si votre modèle le permet)
-* Pas besoin d’adaptateur série si vous avez un module ESP32-CAM avec USB intégré
+* 1 câble **micro-USB** 
 
 ---
 
 ### ⚙️ Étape 1 : Paramétrer l’IDE Arduino
 
+ 1. Aller dans **Fichier > Préférences**
+ 2. Dans **URL de gestionnaire de cartes supplémentaires**, ajouter :
+
+```
+https://espressif.github.io/arduino-esp32/package_esp32_index.json
+```
+3. Aller dans ** Outils > Gestionnaire de cartes > Type de carte **
+4. Rechercher "**ESP32**" et installer **esp32 by Espressif Systems**
+5. Aller dans ** Outils > Board ** et choisir AI Thinker ESP32-CAM
+
+
 * **Carte** : `AI Thinker ESP32-CAM`
 * **Port** : détecté après branchement
-* **Vitesse** : 115200
-* **Flash Mode** : `QIO`
+
 
 ---
 
@@ -729,7 +738,7 @@ sudo systemctl start ssh
 | 🧠 Connaître l’adresse IP locale            | `hostname -I` ou `ip a`                              |
 | 🔐 Se connecter en SSH (sur le même réseau) | `ssh pi@adresse_ip` (par ex. `ssh pi@192.168.1.42`)  |
 | 🔑 Changer le mot de passe d’un utilisateur | `passwd nom_utilisateur` (ex : `passwd pi`)          |
-
+| 🔑Trouver le mdp et infos du WIFI           | nmcli dev wifi show password                         |
 
 
 💡 *Remarque : l’utilisateur par défaut sur Raspberry Pi est souvent `pi`, et le mot de passe par défaut est `raspberry` (à changer !).*
