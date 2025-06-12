@@ -34,7 +34,6 @@ Le Raspberry Pi agit comme **serveur central** qui :
 ├── paquets.txt            # Liste des paquets Python à installer
 ├── readme.md              # Ce fichier README
 ├── flask.log              # Logs du serveur Flask
-|__ start_flask.sh         # demarrer manuellement les serveurs après redemarrage du raspberry
 ├── venv/                  # Environnement virtuel Python
 └── Stage/                 # Dossier principal du projet (détail ci-dessous)
 ```
@@ -55,6 +54,7 @@ Stage/
 ├── STM32_BLE.py           # Communication Bluetooth avec le STM32
 ├── yolov8n.pt             # Modèle YOLOv8 pré-entraîné
 ├── uploads_yolov8/        # Dossier pour images uploadées et `status.txt`
+|__ start_flask.sh         # demarrer manuellement les serveurs après redemarrage du raspberry
 ├── templates/
 │   └── dashboard.html     # Page HTML du dashboard Flask
 ├── static/                # Contient les fichiers Excel et images générés
@@ -472,8 +472,15 @@ Vous devriez voir deux lignes avec des commandes comme `flask run --host=0.0.0.0
 Si les serveurs ne sont **pas lancés automatiquement** apres chaque redemarrage, vous pouvez les démarrer manuellement avec le script prévu :
 
 ```bash
-cd esp32-raspberry-esp32cam-veml7700-ASC712-STM32
+cd esp32-raspberry-esp32cam-veml7700-ASC712-STM32/Stage  
+chmod +x start_flask.sh
 sudo ./start_flask.sh
+```
+ou bien juste :
+
+```bash
+cd esp32-raspberry-esp32cam-veml7700-ASC712-STM32
+sudo ./init.sh
 ```
 
 Ce script relance les deux serveurs Flask (`yolov8.py` et `dashboard.py`) en arrière-plan via `nohup`, même si vous fermez le terminal.
