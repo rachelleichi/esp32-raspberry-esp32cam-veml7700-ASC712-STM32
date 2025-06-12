@@ -728,6 +728,9 @@ sudo systemctl start ssh
 | 📶 Se connecter à un Wi-Fi                  | `nmcli dev wifi connect "Nom" password "MotDePasse"` |
 | 🧠 Connaître l’adresse IP locale            | `hostname -I` ou `ip a`                              |
 | 🔐 Se connecter en SSH (sur le même réseau) | `ssh pi@adresse_ip` (par ex. `ssh pi@192.168.1.42`)  |
+| 🔑 Changer le mot de passe d’un utilisateur | `passwd nom_utilisateur` (ex : `passwd pi`)          |
+
+
 
 💡 *Remarque : l’utilisateur par défaut sur Raspberry Pi est souvent `pi`, et le mot de passe par défaut est `raspberry` (à changer !).*
 * l'extension de fichiers python est .py et fichiers bash(systeme) est .sh
