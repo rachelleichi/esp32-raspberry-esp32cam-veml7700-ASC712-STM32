@@ -4,8 +4,8 @@
 #include "soc/rtc_cntl_reg.h"
 #include "esp_camera.h"
 
-const char* ssid = "Test"; 
-const char* password = "rachel2025";
+const char* ssid = "Raspberry"; 
+const char* password = "Stage.2025";
 
 String serverIP = "192.168.43.218"; // adresse IP du serveur
 String serverPath = "/uploads";     // endpoint serveur

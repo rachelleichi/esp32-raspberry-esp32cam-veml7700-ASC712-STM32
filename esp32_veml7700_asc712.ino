@@ -19,8 +19,8 @@ void setup() {
   Serial.begin(9600);
   delay(10000);  // Temps pour ouvrir le moniteur série 10 S
   
-  const char* ssid = "Test";
-  const char* password = "rachel2025";
+  const char* ssid = "Raspberry";
+  const char* password = "Stage.2025";
   const char* serverName = "http://192.168.43.32:5010/data";
 
   void connectToWiFi() {
