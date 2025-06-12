@@ -425,6 +425,7 @@ Ajoutez la ligne suivante tout en bas du fichier :
 ```bash
 0 8 * * 1 cd /home/pi/esp32-raspberry-esp32cam-veml7700-ASC712-STM32/Stage && /home/pi/venv/bin/python3 weekly_report.py >> /home/pi/Stage/esp32-raspberry-esp32cam-veml7700-ASC712-STM32/cron_report.log 2>&1
 ```
+CTRL +O  et puis CTRL+X
 
 Explications :
 
@@ -450,6 +451,7 @@ Ajoutez ensuite cette ligne à la fin :
 ```bash
 @reboot /home/pi/esp32-raspberry-esp32cam-veml7700-ASC712-STM32/init.sh >> /home/pi/esp32-raspberry-esp32cam-veml7700-ASC712-STM32/init.log 2>&1
 ```
+CTRL +O  et puis CTRL+X
 
 Cela permettra de **relancer automatiquement l'environnement**, les dépendances, et les serveurs Flask à chaque redémarrage du Raspberry Pi.
 
