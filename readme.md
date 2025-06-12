@@ -326,8 +326,8 @@ Ou :
 ### 🔧 Prérequis
 
 * Raspberry Pi avec Python 3.9+
-* Internet pour télécharger les paquets
-* Scripts `init.sh` et `grafana.sh` dans `~/`
+* Internet pour télécharger les paquets 
+* Scripts `init.sh` et `grafana.sh` (recuperation etape 13)
 
 ### ✅ Lancement Automatique
 
@@ -462,10 +462,10 @@ Voici la section à ajouter à la fin de ton README pour expliquer comment confi
 1. Insère une **carte microSD (16 Go ou +)** dans ton ordinateur
 2. Lance **Raspberry Pi Imager**
 3. Choisis :
-
-   * **OS** : `Raspberry Pi OS with desktop (32-bit)`
+   * **model** : Raspberry PI 5
+   * **OS** : `Raspberry Pi OS with desktop (64-bit)` ou juste `Raspberry Pi OS (64-bit)` qui est sans interface graphique
    * **Stockage** : ta carte microSD
-4. Clique sur ⚙️ (roue dentée en bas à droite) pour **préconfigurer** :
+4. Clique sur ⚙️ (roue dentée en bas à droite) pour **préconfigurer** : ( si ça s'affiche)
 
    * Nom de l’hôte (ex. `raspberrypi`)
    * Nom d’utilisateur (ex. `pi`)
@@ -482,18 +482,22 @@ Voici la section à ajouter à la fin de ton README pour expliquer comment confi
 2. Branche un écran, un clavier/souris et le câble d’alimentation
 3. Le Raspberry Pi démarre automatiquement
 
-> Si tu as activé SSH + Wi-Fi, tu peux aussi te connecter à distance sans écran avec :
-
+> Tu peux aussi te connecter à distance sans écran avec :
+Sur le raspberry :
 ```bash
-ssh pi@<adresse-ip>
+
+sudo apt install openssh-server ##(si ce n'est pas installé)
+sudo systemctl enable ssh
+sudo systemctl start ssh
 ```
-en etant sur le meme réseau
----
-Parfait, je comprends ! Tu veux expliquer la méthode où on modifie la commande de démarrage (`cmdline.txt`) pour démarrer en mode **single-user** (mode maintenance) et changer le mot de passe.
+et puis sur n'importe quel machine sur le meme réseau :
+```bash
+ssh user@<adresse-ip>
+```
 
-Voici comment intégrer ça dans le point 5 de ta section, en français puis en anglais :
-
 ---
+
+
 
 ### ⚠️ En cas de perte du mot de passe
 
@@ -576,6 +580,15 @@ Connecte le Raspberry Pi à ton **hotspot personnel** (smartphone) en Wi-Fi :
    ```bash
    nmcli dev wifi connect "NomDuHotspot" password "MotDePasseDuHotspot"
    ```
+    
+    ( Ne pas oublier avant de mettre a jour le pays à "France " en cliquant sur l'icone en haut a droite si l'OS est graphique , sinon en tapant cette commande :
+
+     ```bash
+     sudo raspi-config
+     ```
+      Puis :
+
+      Aller dans Localisation Options → WLAN Country  et Choisir ton pays (ex: FR pour la France) )
 
 3. Vérifie que tu es bien connecté :
 
@@ -593,15 +606,16 @@ Connecte le Raspberry Pi à ton **hotspot personnel** (smartphone) en Wi-Fi :
 
    ```bash
    unzip esp32-main.zip
-   cd esp32-raspberry-esp32cam-veml7700-ASC712-STM32-main  (pour rentrer dans le dossier)
+   cd esp32-raspberry-esp32cam-veml7700-ASC712-STM32-main  #(pour rentrer dans le dossier)
    ```
+   Faire les etapes de la partie 11 .
 
 6. Se déconnecter :
 
    ```bash
    nmcli connection down NomDuHotspot
    ```
-
+Puis faire la partie 4 ( Hotspot )
 ---
 
 #### 🔗 Option 1 : Cloner depuis GitHub (nécessite Internet)
@@ -615,6 +629,15 @@ Connecte le Raspberry Pi à ton **hotspot personnel** (smartphone) en Wi-Fi :
    ```bash
    nmcli dev wifi connect "NomDuHotspot" password "MotDePasseDuHotspot"
    ```
+   ( Ne pas oublier avant de mettre a jour le pays à "France " en cliquant sur l'icone en haut a droite si l'OS est graphique , sinon en tapant cette commande :
+
+     ```bash
+     sudo raspi-config
+     ```
+      Puis :
+
+      Aller dans Localisation Options → WLAN Country  et Choisir ton pays (ex: FR pour la France) )
+
 
 3. Vérifie que tu es bien connecté :
 
@@ -622,7 +645,7 @@ Connecte le Raspberry Pi à ton **hotspot personnel** (smartphone) en Wi-Fi :
    ping google.com
    ```
 
-4. Installe git :
+4. Installe git (s'il n'est pas installé) :
 
    ```bash
    sudo apt update
@@ -635,13 +658,14 @@ Connecte le Raspberry Pi à ton **hotspot personnel** (smartphone) en Wi-Fi :
    git clone https://github.com/rachelleichi/esp32-raspberry-esp32cam-veml7700-ASC712-STM32.git
    cd esp32-raspberry-esp32cam-veml7700-ASC712-STM32
    ```
+   faire les etapes de la partie 11 
 
 6. Se déconnecter :
 
    ```bash
-   nmcli connection down NomDuHotspot
+   sudo nmcli connection down NomDuHotspot
    ```
-
+ Faire les etapes de la partie 4 ( hotspot) .
 ---
 
 #### 📡 Option 2 : Transférer les fichiers via `scp` (si pas d'accès Internet)

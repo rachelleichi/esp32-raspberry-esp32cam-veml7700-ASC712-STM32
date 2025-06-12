@@ -67,29 +67,29 @@ CREATE TABLE IF NOT EXISTS intensite (
 # ------------------------------
 # Bluetooth
 # ------------------------------
-echo "📶 Installation Bluetooth..."
-apt install -y bluez pi-bluetooth
+# echo "📶 Installation Bluetooth..."
+# apt install -y bluez pi-bluetooth
 
-echo "🔗 Configuration de liaison Bluetooth série..."
-cat > /etc/systemd/system/bluetooth-serial.service <<EOF
-[Unit]
-Description=Connexion Bluetooth série STM32
-After=bluetooth.target
+# echo "🔗 Configuration de liaison Bluetooth série..."
+# cat > /etc/systemd/system/bluetooth-serial.service <<EOF
+# [Unit]
+# Description=Connexion Bluetooth série STM32
+# After=bluetooth.target
 
-[Service]
-ExecStart=/usr/bin/rfcomm bind /dev/rfcomm0 0209135d42f2
-ExecStop=/usr/bin/rfcomm release /dev/rfcomm0
-Restart=on-failure
+# [Service]
+# ExecStart=/usr/bin/rfcomm bind /dev/rfcomm0 0209135d42f2
+# ExecStop=/usr/bin/rfcomm release /dev/rfcomm0
+# Restart=on-failure
 
-[Install]
-WantedBy=multi-user.target
-EOF
+# [Install]
+# WantedBy=multi-user.target
+# EOF
 
-systemctl daemon-reexec
-systemctl daemon-reload
-systemctl enable bluetooth-serial.service
+# systemctl daemon-reexec
+# systemctl daemon-reload
+# systemctl enable bluetooth-serial.service
 
-echo "⚠️ Adresse MAC par défaut utilisée (0209135d42f2). Modifie-la si besoin !"
+# echo "⚠️ Adresse MAC par défaut utilisée (0209135d42f2). Modifie-la si besoin !"
 
 # ------------------------------
 # Python & Environnement virtuel
@@ -103,11 +103,11 @@ source venv/bin/activate
 
 echo "📦 Installation des paquets Python depuis paquets.txt..."
 pip install --upgrade pip
-pip install -r paquets.txt
+pip install --prefer-binary -r paquets.txt
 
 
-echo "📦 Installation de tkinter..."
-apt install -y python3-tk
+# echo "📦 Installation de tkinter..."
+# apt install -y python3-tk
 
 # ------------------------------
 # Téléchargement du modèle YOLO
@@ -119,13 +119,13 @@ wget -O Stage/models/yolov8n.pt https://github.com/ultralytics/assets/releases/d
 # ------------------------------
 # Interface graphique + VNC (optionnelle mais automatique ici)
 # ------------------------------
-INSTALL_GUI="y"
-if [ "$INSTALL_GUI" = "y" ]; then
-  echo "🖥️ Installation interface graphique + VNC..."
-  apt install -y --no-install-recommends raspberrypi-ui-mods realvnc-vnc-server
-  systemctl enable vncserver-x11-serviced
-  systemctl start vncserver-x11-serviced
-fi
+# INSTALL_GUI="y"
+# if [ "$INSTALL_GUI" = "y" ]; then
+#   echo "🖥️ Installation interface graphique + VNC..."
+#   apt install -y --no-install-recommends raspberrypi-ui-mods realvnc-vnc-server
+#   systemctl enable vncserver-x11-serviced
+#   systemctl start vncserver-x11-serviced
+# fi
 
 # ------------------------------
 # Lancement automatique des serveurs Flask
