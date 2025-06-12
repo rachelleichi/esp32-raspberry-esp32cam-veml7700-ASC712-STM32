@@ -65,57 +65,34 @@ CREATE TABLE IF NOT EXISTS intensite (
 "
 
 # ------------------------------
-# Bluetooth
-# ------------------------------
-# echo "📶 Installation Bluetooth..."
-# apt install -y bluez pi-bluetooth
-
-# echo "🔗 Configuration de liaison Bluetooth série..."
-# cat > /etc/systemd/system/bluetooth-serial.service <<EOF
-# [Unit]
-# Description=Connexion Bluetooth série STM32
-# After=bluetooth.target
-
-# [Service]
-# ExecStart=/usr/bin/rfcomm bind /dev/rfcomm0 0209135d42f2
-# ExecStop=/usr/bin/rfcomm release /dev/rfcomm0
-# Restart=on-failure
-
-# [Install]
-# WantedBy=multi-user.target
-# EOF
-
-# systemctl daemon-reexec
-# systemctl daemon-reload
-# systemctl enable bluetooth-serial.service
-
-# echo "⚠️ Adresse MAC par défaut utilisée (0209135d42f2). Modifie-la si besoin !"
-
-# ------------------------------
 # Python & Environnement virtuel
 # ------------------------------
 echo "🐍 Installation de Python et dépendances..."
 apt install -y python3-pip python3-venv xdg-utils
 
 echo "📦 Création de l'environnement virtuel..."
-python3 -m venv venv
+if [ ! -d "venv" ]; then
+  python3 -m venv venv
+else
+  echo "ℹ️ Le dossier venv existe déjà, saut de création."
+fi
 source venv/bin/activate
 
 echo "📦 Installation des paquets Python depuis paquets.txt..."
 pip install --upgrade pip
 pip install --prefer-binary -r paquets.txt
 
-
-# echo "📦 Installation de tkinter..."
-# apt install -y python3-tk
-
 # ------------------------------
 # Téléchargement du modèle YOLO
 # ------------------------------
 echo "📥 Téléchargement du modèle YOLOv8..."
 mkdir -p Stage/models
-wget -O Stage/models/yolov8n.pt https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8n.pt
-
+YOLO_MODEL="Stage/models/yolov8n.pt"
+if [ ! -s "$YOLO_MODEL" ]; then
+  wget -O "$YOLO_MODEL" https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8n.pt
+else
+  echo "ℹ️ Le modèle YOLOv8 existe déjà et n'est pas vide, saut du téléchargement."
+fi
 
 # ------------------------------
 # Création des fichiers statiques (Bootstrap / Chart.js pour usage offline)
@@ -123,20 +100,22 @@ wget -O Stage/models/yolov8n.pt https://github.com/ultralytics/assets/releases/d
 echo "🌐 Téléchargement de Bootstrap & Chart.js (mode hors-ligne)..."
 mkdir -p Stage/static/libs
 
-wget -q -O Stage/static/libs/bootstrap.min.css https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css
-wget -q -O Stage/static/libs/chart.min.js https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js
-echo "✅ Bibliothèques frontend téléchargées dans Stage/static/libs/"
+BOOTSTRAP_CSS="Stage/static/libs/bootstrap.min.css"
+CHART_JS="Stage/static/libs/chart.min.js"
 
-# ------------------------------
-# Interface graphique + VNC (optionnelle mais automatique ici)
-# ------------------------------
-# INSTALL_GUI="y"
-# if [ "$INSTALL_GUI" = "y" ]; then
-#   echo "🖥️ Installation interface graphique + VNC..."
-#   apt install -y --no-install-recommends raspberrypi-ui-mods realvnc-vnc-server
-#   systemctl enable vncserver-x11-serviced
-#   systemctl start vncserver-x11-serviced
-# fi
+if [ ! -s "$BOOTSTRAP_CSS" ]; then
+  wget -q -O "$BOOTSTRAP_CSS" https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css
+else
+  echo "ℹ️ Bootstrap CSS déjà présent."
+fi
+
+if [ ! -s "$CHART_JS" ]; then
+  wget -q -O "$CHART_JS" https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js
+else
+  echo "ℹ️ Chart.js déjà présent."
+fi
+
+echo "✅ Bibliothèques frontend prêtes dans Stage/static/libs/"
 
 # ------------------------------
 # Lancement automatique des serveurs Flask

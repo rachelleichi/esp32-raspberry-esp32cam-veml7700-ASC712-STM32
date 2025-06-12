@@ -416,13 +416,13 @@ sudo systemctl start grafana-server  # Port 3000
 Pour générer automatiquement le rapport hebdomadaire chaque **lundi à 8h du matin**, ajoutez une tâche dans la `crontab` de l'utilisateur `pi` (ou votre utilisateur principal) :
 
 ```bash
-crontab -e
+crontab -e # puis choisir 1
 ```
 
 Ajoutez la ligne suivante tout en bas du fichier :
 
 ```bash
-0 8 * * 1 cd /home/pi/esp32-raspberry-esp32cam-veml7700-ASC712-STM32/Stage && /home/pi/venv/bin/python3 weekly_report.py >> /home/pi/Stage/cron_report.log 2>&1
+0 8 * * 1 cd /home/pi/esp32-raspberry-esp32cam-veml7700-ASC712-STM32/Stage && /home/pi/venv/bin/python3 weekly_report.py >> /home/pi/Stage/esp32-raspberry-esp32cam-veml7700-ASC712-STM32/cron_report.log 2>&1
 ```
 
 Explications :
@@ -441,13 +441,13 @@ Explications :
 Pour lancer en **tâche de fond à chaque redémarrage**, ajoutez une ligne dans la `crontab` avec l’option `@reboot` :
 
 ```bash
-crontab -e
+sudo crontab -e  # puis choisir 1
 ```
 
 Puis ajoutez :
 
 ```bash
-@reboot /home/pi/esp32-raspberry-esp32cam-veml7700-ASC712-STM32/init.sh >> /home/pi/init.log 2>&1
+@reboot /home/pi/esp32-raspberry-esp32cam-veml7700-ASC712-STM32/init.sh >> /home/pi/esp32-raspberry-esp32cam-veml7700-ASC712-STM32/init.log 2>&1
 ```
 
 

@@ -24,7 +24,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 last_image_path = None
 
 # Chargement du modèle YOLOv8
-model = YOLO("yolov8n.pt")
+model = YOLO("models/yolov8n.pt")
 
 # Fonction utilitaire pour obtenir une connexion DB
 def get_db_connection():
