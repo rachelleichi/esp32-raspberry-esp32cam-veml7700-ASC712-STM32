@@ -93,7 +93,7 @@ L'adresse IP locale du Raspberry Pi est généralement `192.168.**.1`. (partie 5
 Pour activer le hotspot à chaque démarrage :
 
 ```bash
-nmcli connection modify Hotspot connection.autoconnect yes   
+sudo nmcli connection modify Hotspot connection.autoconnect yes   
 ```
 ne pas changer Hotspot dans cette commande
 
