@@ -9,6 +9,7 @@ Ce projet a été réalisé dans le cadre de mon stage de fin de 2eme année. Il
 
 * La partie STM32 et STM32_BLE.py n'a pas été abordé dans le readme , car pas necessaire pour le stage
 ---
+Ordre d'éxecution : Etape 14 => 11 => 4 
 
 ## 🍓 2. Architecture générale
 
@@ -396,10 +397,6 @@ python3 dashboard.py    # Port 5011
 sudo systemctl start grafana-server  # Port 3000
 ```
 
----
-Voici une **nouvelle section 13** que vous pouvez **ajouter à la fin de votre documentation** pour automatiser la génération de rapports hebdomadaires et lancer automatiquement le script `monitor_db.py` au démarrage via `cron` :
-
----
 
 ## 🕒 13. Automatisations avec `crontab`
 
@@ -428,7 +425,7 @@ Explications :
 
 ---
 
-### 🧠 13.2 Démarrage automatique du script `init.sh`
+### 🧠 13.2 Démarrage automatique du script `init.sh`  ( un plus )
 
 Pour lancer en **tâche de fond à chaque redémarrage**, ajoutez une ligne dans la `crontab` avec l’option `@reboot` :
 
@@ -442,9 +439,6 @@ Puis ajoutez :
 @reboot /home/pi/init.sh >> /home/pi/init.log 2>&1
 ```
 
-Voici la section à ajouter à la fin de ton README pour expliquer comment configurer un Raspberry Pi depuis zéro avec un système d’exploitation Desktop :
-
----
 
 ## 🧰 14. Mise en route d’un Raspberry Pi (OS Desktop + configuration initiale)
 
@@ -608,14 +602,14 @@ Connecte le Raspberry Pi à ton **hotspot personnel** (smartphone) en Wi-Fi :
    unzip esp32-main.zip
    cd esp32-raspberry-esp32cam-veml7700-ASC712-STM32-main  #(pour rentrer dans le dossier)
    ```
-   Faire les etapes de la partie 11 .
+   Faire les étapes de la partie 11 .
 
 6. Se déconnecter :
 
    ```bash
    nmcli connection down NomDuHotspot
    ```
-Puis faire la partie 4 ( Hotspot )
+   Puis faire les étapes de la partie 4 ( Hotspot )
 ---
 
 #### 🔗 Option 1 : Cloner depuis GitHub (nécessite Internet)
@@ -658,14 +652,14 @@ Connecte le Raspberry Pi à ton **hotspot personnel** (smartphone) en Wi-Fi :
    git clone https://github.com/rachelleichi/esp32-raspberry-esp32cam-veml7700-ASC712-STM32.git
    cd esp32-raspberry-esp32cam-veml7700-ASC712-STM32
    ```
-   faire les etapes de la partie 11 
+   faire les étapes de la partie 11 
 
 6. Se déconnecter :
 
    ```bash
    sudo nmcli connection down NomDuHotspot
    ```
- Faire les etapes de la partie 4 ( hotspot) .
+   Faire les étapes de la partie 4 ( hotspot) .
 ---
 
 #### 📡 Option 2 : Transférer les fichiers via `scp` (si pas d'accès Internet)
