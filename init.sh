@@ -116,6 +116,17 @@ echo "📥 Téléchargement du modèle YOLOv8..."
 mkdir -p Stage/models
 wget -O Stage/models/yolov8n.pt https://github.com/ultralytics/assets/releases/download/v0.0.0/yolov8n.pt
 
+
+# ------------------------------
+# Création des fichiers statiques (Bootstrap / Chart.js pour usage offline)
+# ------------------------------
+echo "🌐 Téléchargement de Bootstrap & Chart.js (mode hors-ligne)..."
+mkdir -p Stage/static/libs
+
+wget -q -O Stage/static/libs/bootstrap.min.css https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css
+wget -q -O Stage/static/libs/chart.min.js https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js
+echo "✅ Bibliothèques frontend téléchargées dans Stage/static/libs/"
+
 # ------------------------------
 # Interface graphique + VNC (optionnelle mais automatique ici)
 # ------------------------------
