@@ -436,20 +436,49 @@ Explications :
 
 ---
 
-### 🧠 13.2 Démarrage automatique du script `init.sh`  ( un plus )
+### 🧠 13.2 Démarrage automatique du script `init.sh` (un plus)
 
 Pour lancer en **tâche de fond à chaque redémarrage**, ajoutez une ligne dans la `crontab` avec l’option `@reboot` :
 
 ```bash
-sudo crontab -e  # puis choisir 1
+sudo crontab -e  # puis choisir 1 (éditeur nano)
 ```
 
-Puis ajoutez :
+Ajoutez ensuite cette ligne à la fin :
 
 ```bash
 @reboot /home/pi/esp32-raspberry-esp32cam-veml7700-ASC712-STM32/init.sh >> /home/pi/esp32-raspberry-esp32cam-veml7700-ASC712-STM32/init.log 2>&1
 ```
 
+Cela permettra de **relancer automatiquement l'environnement**, les dépendances, et les serveurs Flask à chaque redémarrage du Raspberry Pi.
+
+---
+
+### 🛠️ 13.3 Vérification du bon fonctionnement des serveurs Flask
+
+Après un redémarrage du Raspberry Pi ou à tout moment, vous pouvez vérifier si les serveurs Flask (YOLOv8 sur port `5010` et dashboard sur `5011`) sont bien actifs :
+
+```bash
+ps aux | grep flask
+```
+
+Vous devriez voir deux lignes avec des commandes comme `flask run --host=0.0.0.0 --port=5010` et `--port=5011`.
+
+---
+
+### 🚀 13.4 Démarrage manuel des serveurs Flask (si besoin)
+
+Si les serveurs ne sont **pas lancés automatiquement** apres chaque redemarrage, vous pouvez les démarrer manuellement avec le script prévu :
+
+```bash
+cd esp32-raspberry-esp32cam-veml7700-ASC712-STM32
+sudo ./start_flask.sh
+```
+
+Ce script relance les deux serveurs Flask (`yolov8.py` et `dashboard.py`) en arrière-plan via `nohup`, même si vous fermez le terminal.
+Vérifiez ensuite leur statut comme mentionné ci-dessus (`ps aux | grep flask`).
+
+---
 
 ## 🧰 14. Mise en route d’un Raspberry Pi (OS Desktop + configuration initiale)
 
