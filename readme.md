@@ -34,6 +34,7 @@ Le Raspberry Pi agit comme **serveur central** qui :
 ├── paquets.txt            # Liste des paquets Python à installer
 ├── readme.md              # Ce fichier README
 ├── flask.log              # Logs du serveur Flask
+|__ start_flask.sh         # demarrer manuellement les serveurs après redemarrage du raspberry
 ├── venv/                  # Environnement virtuel Python
 └── Stage/                 # Dossier principal du projet (détail ci-dessous)
 ```
