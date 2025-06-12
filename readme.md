@@ -141,7 +141,7 @@ Lien utile : https://www.hackster.io/NYH-workshop/wemos-r32-with-arduino-startup
 * Dans l’IDE Arduino :
 
   * **Carte** : `ESP32 Dev Module`
-  * **Port** : sélection automatique après branchement
+  * **Port** : sélection automatique après branchement (COM6)
 
 ---
 
@@ -178,7 +178,7 @@ Ouvrir le fichier et modifier les lignes 22,23,24 :
 ```cpp
 const char* ssid = "MonHotspot";         // nom du hotspot du Raspberry Pi
 const char* password = "monmotdepasse";  // mot de passe
-const char* serverName = "http://192.168.43.1:5010/data";  // IP + endpoint Flask (ne pas changer /data)
+const char* serverName = "http://10.42.0.1:5010/data";  // IP + endpoint Flask (ne pas changer /data)
 ```
 Assurez-vous que l’adresse IP du Pi est correcte .
 
@@ -215,7 +215,7 @@ https://espressif.github.io/arduino-esp32/package_esp32_index.json
 
 
 * **Carte** : `AI Thinker ESP32-CAM`
-* **Port** : détecté après branchement
+* **Port** : détecté après branchement (COM10)
 
 
 ---

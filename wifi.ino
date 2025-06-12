@@ -7,7 +7,7 @@
 const char* ssid = "Raspberry"; 
 const char* password = "Stage.2025";
 
-String serverIP = "192.168.43.218"; // adresse IP du serveur
+String serverIP = "10.42.0.1"; // adresse IP du serveur
 String serverPath = "/uploads";     // endpoint serveur
 
 const int ports[] = {5010}; // port ou ports
