@@ -227,7 +227,7 @@ Changer les lignes suivantes (lignes 8,10 et 11) :
 ```cpp
 const char* ssid = "MonHotspot";         // nom du hotspot du Pi
 const char* password = "monmotdepasse";  // mot de passe
-String serverIP = "192.168.43.1";        // IP du Pi
+String serverIP = "10.42.0.1";        // IP du Pi
 ```
 
 Le fichier envoie des photos à l’URL `http://192.168.43.1:5000/upload` par défaut.
@@ -344,6 +344,7 @@ Ou :
 1. 📦 Installation & démarrage des serveurs :
 
 ```bash
+cd esp32-raspberry-esp32cam-veml7700-ASC712-STM32/
 sudo chmod +x init.sh
 sudo ./init.sh
 ```
@@ -351,6 +352,7 @@ sudo ./init.sh
 2. 🌐 Démarrage de Grafana :
 
 ```bash
+cd esp32-raspberry-esp32cam-veml7700-ASC712-STM32/
 sudo chmod +x grafana.sh
 sudo ./grafana.sh
 ```
@@ -420,7 +422,7 @@ crontab -e
 Ajoutez la ligne suivante tout en bas du fichier :
 
 ```bash
-0 8 * * 1 cd /home/pi/Stage && /home/pi/venv/bin/python3 weekly_report.py >> /home/pi/Stage/cron_report.log 2>&1
+0 8 * * 1 cd /home/pi/esp32-raspberry-esp32cam-veml7700-ASC712-STM32/Stage && /home/pi/venv/bin/python3 weekly_report.py >> /home/pi/Stage/cron_report.log 2>&1
 ```
 
 Explications :
@@ -445,7 +447,7 @@ crontab -e
 Puis ajoutez :
 
 ```bash
-@reboot /home/pi/init.sh >> /home/pi/init.log 2>&1
+@reboot /home/pi/esp32-raspberry-esp32cam-veml7700-ASC712-STM32/init.sh >> /home/pi/init.log 2>&1
 ```
 
 
