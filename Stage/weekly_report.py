@@ -2,6 +2,7 @@ import mysql.connector
 import matplotlib.pyplot as plt
 import pandas as pd
 from datetime import datetime, timedelta
+import os
 
 # Connexion à la base de données
 conn = mysql.connector.connect(
@@ -36,15 +37,14 @@ for name, query in tables.items():
     df.sort_values('timestamp', inplace=True)
     dataframes[name] = df
 
+    # 📊 Génération du graphique
     plt.figure(figsize=(10, 4))
     x = df['timestamp']
 
     if name == "intensite":
-        # ✅ Lignes pour courant et puissance
         for col in df.columns[1:]:
             plt.plot(x, df[col], label=col, marker='o', markersize=3, linestyle='-')
     else:
-        # ✅ Barres pour présence et luminosité
         plt.bar(x, df[df.columns[1]], width=0.03, label=df.columns[1], alpha=0.7)
 
     plt.title(f"{name.capitalize()} - 7 derniers jours")
@@ -60,15 +60,14 @@ for name, query in tables.items():
     plt.close()
     print(f"[INFO] Plot saved: {image_path}")
 
+    # 💾 Export CSV individuel
+    csv_path = f"{name}_report_{datetime.now().strftime('%Y%m%d')}.csv"
+    df.to_csv(csv_path, index=False)
+    print(f"[INFO] CSV export saved: {csv_path}")
+
     cursor.close()
 
+conn.close()
 
-# Export vers Excel
-excel_filename = f"weekly_report_{datetime.now().strftime('%Y%m%d')}.xlsx"
-if dataframes:
-    with pd.ExcelWriter(excel_filename, engine='openpyxl') as writer:
-        for name, df in dataframes.items():
-            df.to_excel(writer, sheet_name=name, index=False)
-    print(f"[INFO] Excel report saved as: {excel_filename}")
-else:
-    print("[WARNING] No data found — Excel file not generated.")
+if not dataframes:
+    print("[WARNING] No data found — no CSV generated.")

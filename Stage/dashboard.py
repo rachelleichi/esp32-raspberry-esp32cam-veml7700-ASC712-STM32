@@ -63,11 +63,11 @@ def download_excel():
     end_date = request.form.get("end_date")
     df = fetch_data(table, start_date, end_date)
 
-    filename = f"{table}_report.xlsx"
+    filename = f"{table}_report.csv"
     path = os.path.join("static", filename)
-    df.to_excel(path, index=False)
+    df.to_csv(path, index=False)
 
-    return send_file(path, as_attachment=True)
+    return send_file(path, as_attachment=True, mimetype='text/csv', download_name=filename)
 
 
 if __name__ == '__main__':

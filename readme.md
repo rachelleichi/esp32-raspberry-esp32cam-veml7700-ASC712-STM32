@@ -293,7 +293,7 @@ Ou :
 * Flask – Port 5011
 * Affiche graphiques des 3 tables : `presence`, `luminosite`, `intensite`
 * Filtres par date (`start_date`, `end_date`)
-* Téléchargement Excel possible
+* Téléchargement CSV possible
 
 ---
 
@@ -305,7 +305,7 @@ Ou :
 
   * Histogrammes : présence, luminosité
   * Courbes : courant, puissance
-* Fichier Excel + images PNG enregistrés dans `static/`
+* Fichier CSV + images PNG enregistrés dans `static/`
 
 ---
 
