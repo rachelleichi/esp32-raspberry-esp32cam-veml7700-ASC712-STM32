@@ -601,6 +601,7 @@ Ouvre un terminal et exécute :
 
 ```bash
 sudo apt update && sudo apt upgrade -y
+sudo date -s "2025-06-13 16:05:00"  # mettre a jour la date ( si erreurs )
 ```
 
 ---
