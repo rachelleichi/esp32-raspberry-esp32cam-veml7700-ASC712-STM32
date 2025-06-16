@@ -2,9 +2,9 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-EMAIL = "rachel.meflah@etu.univ-amu.fr"
-PASSWORD = "Frankenstein%19974"
-TO_EMAIL = "rachel.meflah@etu.univ-amu.fr"  # tu peux mettre une autre adresse si tu veux
+EMAIL = ""
+PASSWORD = "="
+TO_EMAIL = ""  # tu peux mettre une autre adresse si tu veux
 
 SMTP_SERVER = "smtp.cmi.univ-mrs.fr"
 SMTP_PORT = 587  # généralement 587 pour TLS
