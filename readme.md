@@ -438,7 +438,7 @@ Explications :
 
 ---
 
-### 🧠 13.2 Démarrage automatique du script `init.sh` (un plus)
+### 🧠 13.2 Démarrage automatique du script `start_flask.sh` (un plus)
 
 Pour lancer en **tâche de fond à chaque redémarrage**, ajoutez une ligne dans la `crontab` avec l’option `@reboot` :
 
@@ -449,7 +449,7 @@ sudo crontab -e  # puis choisir 1 (éditeur nano)
 Ajoutez ensuite cette ligne à la fin :
 
 ```bash
-@reboot /home/pi/esp32-raspberry-esp32cam-veml7700-ASC712-STM32/init.sh >> /home/pi/esp32-raspberry-esp32cam-veml7700-ASC712-STM32/init.log 2>&1
+@reboot /home/pi/esp32-raspberry-esp32cam-veml7700-ASC712-STM32/start_flask.sh >> /home/pi/esp32-raspberry-esp32cam-veml7700-ASC712-STM32/start_flask.log 2>&1
 ```
 CTRL +O  et puis CTRL+X
 

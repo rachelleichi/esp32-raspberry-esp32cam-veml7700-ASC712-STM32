@@ -3,7 +3,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 EMAIL = ""
-PASSWORD = "="
+PASSWORD = ""
 TO_EMAIL = ""  # tu peux mettre une autre adresse si tu veux
 
 SMTP_SERVER = "smtp.cmi.univ-mrs.fr"
