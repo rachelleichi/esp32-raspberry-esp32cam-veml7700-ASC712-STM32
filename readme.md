@@ -342,7 +342,7 @@ Ou :
 
 ### ✅ Lancement Automatique
 
-1. 📦 Installation & démarrage des serveurs :
+1. 📦 Installation de paquets & démarrage des serveurs :
 
 ```bash
 cd esp32-raspberry-esp32cam-veml7700-ASC712-STM32/
@@ -350,13 +350,123 @@ sudo chmod +x init.sh
 sudo ./init.sh
 ```
 
-2. 🌐 Démarrage de Grafana :
+
+### 2. 🌐 Démarrage de Grafana
 
 ```bash
 cd esp32-raspberry-esp32cam-veml7700-ASC712-STM32/
 sudo chmod +x grafana.sh
 sudo ./grafana.sh
 ```
+
+> Cette commande lance Grafana sur le port par défaut `http://localhost:3000`.
+
+---
+
+### 🔐 Connexion à Grafana
+
+1. Ouvre ton navigateur à l’adresse : [http://localhost:3000]
+2. Identifiants par défaut :
+
+   * **Utilisateur** : `admin`
+   * **Mot de passe** : `admin`
+3. Change le mot de passe si Grafana le demande (ou reclique sur "skip").
+
+---
+
+### ⚙️ Configuration de la source de données MariaDB
+
+1. Clique sur **"Gear ⚙️ (Configuration)" > "Data Sources"**
+2. Choisis **MySQL**
+3. Remplis les champs :
+
+   * **Name**: `StageDB`
+   * **Host**: `localhost:3306`
+   * **Database**: `Stage`
+   * **User**: `rachel`
+   * **Password**: `Stage.2025`
+4. Clique sur **Save & Test** pour valider.
+
+---
+
+### 📊 Création des panneaux (panels) dans un Dashboard
+
+#### 🔸 1. Luminosité vs Temps
+
+```sql
+SELECT
+  timestamp AS time,
+  taux_luminosite AS value
+FROM luminosite
+ORDER BY timestamp ASC
+```
+
+* Panel : `Time series` ou 'Bar chart '
+* Unité : `%`
+* Couleur : jaune / vert
+
+---
+
+#### 🔸 2. Présence vs Temps
+
+```sql
+SELECT
+  timestamp AS time,
+  presence_detected AS value
+FROM presence
+ORDER BY timestamp ASC
+```
+
+* Panel : ` Bar chart '
+
+---
+
+#### 🔸 3. Courant & Puissance vs Temps (même graphique)
+
+```sql
+SELECT
+  timestamp AS time,
+  courant,
+  puissance
+FROM intensite
+ORDER BY timestamp ASC
+```
+
+* Panel : `Time series`
+* Couleurs différentes :
+
+  * `Courant` → Bleu (A)
+  * `Puissance` → Rouge (W)
+* Tu peux afficher la `puissance` sur un **axe droit** via `Overrides`.
+
+---
+
+#### 🔸 4. Toutes les valeurs ensemble (4 lignes dans 1 graphe)
+
+```sql
+SELECT
+  timestamp AS time,
+  taux_luminosite,
+  presence_detected,
+  courant,
+  puissance
+FROM (
+  SELECT 
+    COALESCE(l.timestamp, p.timestamp, i.timestamp) AS timestamp,
+    l.taux_luminosite,
+    p.presence_detected,
+    i.courant,
+    i.puissance
+  FROM luminosite l
+  LEFT JOIN presence p ON p.timestamp = l.timestamp
+  LEFT JOIN intensite i ON i.timestamp = l.timestamp
+) AS data
+ORDER BY time ASC;
+```
+
+* Panel : `Bar chart`
+
+
 
 3. 📊 Génération de rapport :
 
