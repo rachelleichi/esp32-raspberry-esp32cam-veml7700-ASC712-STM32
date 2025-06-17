@@ -11,7 +11,7 @@ const float sensitivity = 100; // Sensibilité en mV/A
 const float offset = 2.5;
 const float Voltage_V = 230.0;
 unsigned long previousMillis = 0;
-const long interval = 60000;
+const long interval = 60000; // toutes les  min
 
 float totalCurrent = 0;
 
