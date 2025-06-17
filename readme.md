@@ -34,16 +34,6 @@ Le Raspberry Pi agit comme **serveur central** qui :
 ├── paquets.txt            # Liste des paquets Python à installer
 ├── readme.md              # Ce fichier README
 ├── flask.log              # Logs du serveur Flask
-├── venv/                  # Environnement virtuel Python
-└── Stage/                 # Dossier principal du projet (détail ci-dessous)
-```
-
-### Répertoire `~/Stage` :
-
-```
-Stage/
-├── yolov8.py              # Serveur Flask YOLOv8 – port 5010
-├── dashboard.py           # Dashboard Flask – port 5011
 ├── weekly_report.py       # Générateur de rapport Excel + graphiques
 ├── send_email_alert.py    # (optionnel) Alerte email en cas d'anomalie
 ├── send_report.py         # (optionnel) Envoi de rapports par email
@@ -52,6 +42,19 @@ Stage/
 ├── monitor_db.py          # Monitoring manuel de la base (optionnel)
 |__alert_logs.txt          # Ecriture des erreurs de logs du  script monitor_db.py
 ├── STM32_BLE.py           # Communication Bluetooth avec le STM32
+├── venv/                  # Environnement virtuel Python
+└── Stage/                 # Dossier principal des serveurs (détail ci-dessous)
+└── wifi/                  # Dossier contenant le fichier ino de l'ESP32 CAM
+└── esp32_veml7700_asc712/ # Dossier contenant le fichier ino de l'ESP32 (pour capteurs de luminosité et intensité)
+
+```
+
+### Répertoire `~/Stage` :
+
+```
+Stage/
+├── yolov8.py              # Serveur Flask YOLOv8 – port 5010
+├── dashboard.py           # Dashboard Flask – port 5011
 ├── yolov8n.pt             # Modèle YOLOv8 pré-entraîné
 ├── uploads_yolov8/        # Dossier pour images uploadées et `status.txt`
 |__ start_flask.sh         # demarrer manuellement les serveurs après redemarrage du raspberry
@@ -471,15 +474,23 @@ ORDER BY time ASC;
 3. 📊 Génération de rapport :
 
 ```bash
-cd /Stage
+source venv/bin/activate   #activation de l'env virtuel
 python3 weekly_report.py
 ```
 
 4. 🧹 Nettoyage de la base :
 
 ```bash
-python3 clean_db.py
+source venv/bin/activate   #activation de l'env virtuel
+python3 clean.py           # efface tout !!
 ```
+ou bien nettoyer partiellement :
+
+```bash
+source venv/bin/activate   #activation de l'env virtuel
+python3 clean_db.py        
+```
+
 
 ---
 
@@ -896,4 +907,4 @@ sudo systemctl start ssh
 💡 *Remarque : l’utilisateur par défaut sur Raspberry Pi est souvent `pi`, et le mot de passe par défaut est `raspberry` (à changer !).*
 * l'extension de fichiers python est .py et fichiers bash(systeme) est .sh
 
-
+* en cas d'erreurs d'execution d'un script python , ne pas oublier d'activer l'env virtuel avec source venv/bin/activate .
