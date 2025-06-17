@@ -6,7 +6,7 @@ EMAIL = ""
 PASSWORD = ""
 TO_EMAIL = ""  # tu peux mettre une autre adresse si tu veux
 
-SMTP_SERVER = "smtp.cmi.univ-mrs.fr"
+SMTP_SERVER = "smtp.cmi.univ-mrs.fr" # a changer
 SMTP_PORT = 587  # généralement 587 pour TLS
 
 def send_email(reason):
