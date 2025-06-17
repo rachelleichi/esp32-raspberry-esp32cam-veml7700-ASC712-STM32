@@ -45,6 +45,7 @@ Le Raspberry Pi agit comme **serveur central** qui :
 ├── venv/                  # Environnement virtuel Python
 └── Stage/                 # Dossier principal des serveurs (détail ci-dessous)
 └── wifi/                  # Dossier contenant le fichier ino de l'ESP32 CAM
+└── Rapports_et_plots/     # Dossier contenant les rapports et plots générés .
 └── esp32_veml7700_asc712/ # Dossier contenant le fichier ino de l'ESP32 (pour capteurs de luminosité et intensité)
 
 ```
@@ -60,7 +61,7 @@ Stage/
 |__ start_flask.sh         # demarrer manuellement les serveurs après redemarrage du raspberry
 ├── templates/
 │   └── dashboard.html     # Page HTML du dashboard Flask
-├── static/                # Contient les fichiers Excel et images générés
+├── static/                # Contient le fichier de style 
 └── models/                # (optionnel) Modèles supplémentaires ou archives
 ```
 ---

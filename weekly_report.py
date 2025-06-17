@@ -12,6 +12,11 @@ conn = mysql.connector.connect(
     database="Stage"
 )
 
+UPLOAD_FOLDER = 'Rapports_et_plots'
+
+# Création du dossier d’upload si nécessaire
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
 one_week_ago = datetime.now() - timedelta(days=7)
 
 tables = {
@@ -47,7 +52,7 @@ for name, query in tables.items():
     else:
         plt.bar(x, df[df.columns[1]], width=0.03, label=df.columns[1], alpha=0.7)
 
-    plt.title(f"{name.capitalize()} - 7 derniers jours")
+    plt.title(f"Rapports_et_plots/{name.capitalize()} - 7 derniers jours")
     plt.xlabel("Horodatage")
     plt.ylabel("Valeur")
     plt.legend()
@@ -55,13 +60,13 @@ for name, query in tables.items():
     plt.xticks(rotation=45)
     plt.tight_layout()
 
-    image_path = f"{name}_week_plot.png"
+    image_path = f"Rapports_et_plots/{name}_week_plot.png"
     plt.savefig(image_path)
     plt.close()
     print(f"[INFO] Plot saved: {image_path}")
 
     # 💾 Export CSV individuel
-    csv_path = f"{name}_report_{datetime.now().strftime('%Y%m%d')}.csv"
+    csv_path = f"Rapports_et_plots/{name}_report_{datetime.now().strftime('%Y%m%d')}.csv"
     df.to_csv(csv_path, index=False)
     print(f"[INFO] CSV export saved: {csv_path}")
 

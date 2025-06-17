@@ -12,7 +12,7 @@ RECEIVER_EMAIL = "your_email@gmail.com"  # or someone else
 
 # File to send
 today = datetime.now().strftime('%Y%m%d')
-file_to_send = f"weekly_report_{today}.xlsx"
+file_to_send = f"Rapports_et_plots/weekly_report_{today}.xlsx"
 
 if not os.path.exists(file_to_send):
     print(f"[ERROR] File not found: {file_to_send}")
