@@ -21,11 +21,9 @@ def get_light_value():
         repeat_count = 0
 
     # Si la même valeur se répète 5 fois
-    if repeat_count >= 5:
+    elif repeat_count >= 5:
         return "000"  # Code "00" pour répétition 5 fois
-    # Si la luminosité est inférieure à 200
-    elif light_value <= 200:
-        return "0"  # Code "0" pour luminosité faible (<200)
+    
     else:
         return str(light_value)  # Retourner la valeur de la luminosité
 
