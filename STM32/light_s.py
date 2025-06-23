@@ -21,7 +21,7 @@ def get_light_value():
         repeat_count = 0
 
     # Si la même valeur se répète 5 fois
-    elif repeat_count >= 5:
+    if repeat_count >= 5:
         return "000"  # Code "00" pour répétition 5 fois
     
     else:
