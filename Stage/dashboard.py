@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, send_file
 import pandas as pd
 import mysql.connector
 from datetime import datetime
+from datetime import timedelta
 import os
 
 
@@ -14,15 +15,23 @@ DB_CONFIG = {
     "database": "Stage"
 }
 
+
+
 def fetch_data(table, start_date=None, end_date=None):
     conn = mysql.connector.connect(**DB_CONFIG)
     query = f"SELECT * FROM {table}"
+
     if start_date and end_date:
-        query += f" WHERE timestamp BETWEEN '{start_date}' AND '{end_date}'"
-    query += " ORDER BY timestamp DESC"  # <- tri du plus récent au plus ancien
+        # Convert end_date to exclusive upper bound
+        end_dt = datetime.strptime(end_date, "%Y-%m-%d") + timedelta(days=1)
+        end_date_plus_one = end_dt.strftime("%Y-%m-%d")
+        query += f" WHERE timestamp >= '{start_date}' AND timestamp < '{end_date_plus_one}'"
+
+    query += " ORDER BY timestamp DESC"
     df = pd.read_sql(query, conn)
     conn.close()
     return df
+
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -36,6 +45,7 @@ def dashboard():
     merged_data = pd.DataFrame()
 
     for table in tables:
+        end_date = end_date 
         df = fetch_data(table, start_date, end_date)
         dataframes[table] = {
             "html": df.to_html(classes='table table-bordered table-sm', index=False),
