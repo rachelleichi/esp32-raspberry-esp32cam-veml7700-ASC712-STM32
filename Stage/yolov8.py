@@ -49,13 +49,30 @@ def save_presence_to_db(presence_flag):
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
+
+        # Check the last inserted time
+        cursor.execute("SELECT timestamp FROM presence ORDER BY timestamp DESC LIMIT 1")
+        last_row = cursor.fetchone()
+
+        now = datetime.now()
+
+        if last_row:
+            last_time = last_row[0]
+            delta = (now - last_time).total_seconds()
+            if delta < 30: #pour eviter les doublons dans les 30 secondes
+                print(f"[INFO] Skipping DB insert (duplicate within 30s)")
+                return
+
         cursor.execute("INSERT INTO presence (presence_detected) VALUES (%s)", (presence_flag,))
         conn.commit()
+        print("[INFO] Inserted new presence value in DB")
+
     except mysql.connector.Error as err:
         print(f"[ERROR] MariaDB error: {err}")
     finally:
         cursor.close()
         conn.close()
+
 
 @app.route('/uploads', methods=['POST'])
 def upload_file():
