@@ -24,7 +24,7 @@ Le Raspberry Pi agit comme **serveur central** qui :
 
 ## 📁 3. Arborescence des fichiers
 
-### Répertoire personnel `~/` :
+### Répertoire  `~/` :
 
 ```
 ~/
